@@ -1,4 +1,4 @@
-# COMP229 Assignment 3 — Portfolio backend
+# COMP229 Assignment 4 — Portfolio backend
 
 Author: Mohamad Alkurdi
 
