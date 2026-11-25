@@ -1,0 +1,11 @@
+node_modules/
+client/node_modules/
+client/dist/
+.env
+.mongo-data/
+.history/
+*.log
+.DS_Store
+client/cypress/videos/
+client/cypress/screenshots/
+evidence/assignment4-report-render/

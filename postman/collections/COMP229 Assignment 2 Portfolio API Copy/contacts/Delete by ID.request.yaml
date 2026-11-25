@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/api/contacts/{{contactsId}}"
+method: DELETE
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+order: 5000

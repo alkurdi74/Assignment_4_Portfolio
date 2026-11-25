@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/qualifications/{{qualificationsId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+body:
+  type: text
+  content: |-
+    {
+      "email": "updated@example.com"
+    }
+order: 4000

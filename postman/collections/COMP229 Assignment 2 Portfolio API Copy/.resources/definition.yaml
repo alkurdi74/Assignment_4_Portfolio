@@ -1,0 +1,5 @@
+$kind: collection
+description: Run against a disposable Portfolio database. DELETE collection requests remove all records. Register, then sign in; the token is saved automatically.
+variables:
+  baseUrl: http://localhost:3000
+  token: ""

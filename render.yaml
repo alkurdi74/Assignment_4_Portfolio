@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: comp229-portfolio-demo
+    runtime: node
+    region: ohio
+    plan: free
+    buildCommand: npm ci && npm --prefix client ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MONGODB_URI
+        sync: false
+      - key: SEED_ADMIN_ON_STARTUP
+        value: "true"
+      - key: ADMIN_NAME
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false

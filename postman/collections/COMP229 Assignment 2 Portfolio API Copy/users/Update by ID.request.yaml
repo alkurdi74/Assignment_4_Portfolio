@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/users/{{usersId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+body:
+  type: text
+  content: |-
+    {
+      "name": "Updated User"
+    }
+order: 4000
