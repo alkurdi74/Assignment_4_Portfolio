@@ -1,3 +1,3 @@
-name: Install Cypress binary
-working-directory: client
-run: npx --yes cypress@13.17.0 install
+      - name: Install Cypress binary
+        working-directory: client
+        run: npx --yes cypress@13.17.0 install
