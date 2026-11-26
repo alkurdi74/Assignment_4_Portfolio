@@ -1,3 +1,72 @@
-      run: |
+name: Build, test, and browser-check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:7
+        ports:
+          - 27017:27017
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            client/package-lock.json
+      - run: npm ci
+      - run: npm ci --prefix client
+      - run: npm --prefix client run lint
+      - run: npm run build
+
+      - name: Run API and database tests
+        run: npm test
+        env:
+          TEST_MONGODB_URI: mongodb://127.0.0.1:27017
+
+      - name: Start production app for Cypress
+        run: |
+          npm start > /tmp/portfolio.log 2>&1 &
+          for attempt in {1..40}; do
+            if curl --fail --silent http://127.0.0.1:3000/api/health; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/portfolio.log
+          exit 1
+        env:
+          NODE_ENV: production
+          PORT: 3000
+          MONGODB_URI: mongodb://127.0.0.1:27017/portfolio_assignment4_ci
+          JWT_SECRET: assignment4-ci-only-secret-not-for-deployment
+          SEED_ADMIN_ON_STARTUP: "true"
+          ADMIN_NAME: E2E Administrator
+          ADMIN_EMAIL: admin@example.test
+          ADMIN_PASSWORD: Assignment4TestPassword!
+
+      - name: Run Cypress end-to-end tests and record video
+        working-directory: client
+        run: |
           npx --yes cypress@13.17.0 install
           npx --yes cypress@13.17.0 run --browser electron
+        env:
+          CYPRESS_ADMIN_EMAIL: admin@example.test
+          CYPRESS_ADMIN_PASSWORD: Assignment4TestPassword!
+
+      - name: Save Cypress recordings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-e2e-recordings
+          path: |
+            client/cypress/videos
+            client/cypress/screenshots
+          if-no-files-found: ignore
+          retention-days: 7
