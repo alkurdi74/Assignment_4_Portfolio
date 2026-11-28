@@ -12,6 +12,7 @@ export default function About() {
           <h2>Mohamad Alkurdi</h2>
           <p>I am studying Software Engineering at Centennial College. I also completed the Cyber Security Analyst program at Willis College. I have a background in IT, networking and project management, and I am now developing my skills in React and web applications.</p>
           <p>I enjoy solving problems, working with others and learning through practical projects. I speak English and Arabic, and I am based in Ottawa, Ontario.</p>
+          <p><b>This portfolio demonstrates a React frontend connected to an Express API and MongoDB Atlas.</b></p>
           <a className="button" href="/resume.pdf" target="_blank" rel="noreferrer">View my résumé (PDF)</a>
         </section>
       </div>
